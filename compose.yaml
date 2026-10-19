@@ -1,0 +1,52 @@
+name: seatlock
+services:
+  postgres:
+    image: postgres:16.9-alpine3.21
+    environment:
+      POSTGRES_DB: seatlock
+      POSTGRES_USER: seatlock
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-local-demo-only}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U seatlock -d seatlock']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7.4.4-alpine3.21
+    command: [redis-server, --maxmemory, 64mb, --maxmemory-policy, allkeys-lru]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/seatlock
+      DB_PASSWORD: ${DB_PASSWORD:-local-demo-only}
+      REDIS_HOST: redis
+      HOLD_SECONDS: ${HOLD_SECONDS:-300}
+      LAB_ENABLED: ${LAB_ENABLED:-true}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-SeatLock-demo-2026!}
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD-SHELL, 'bash -c "exec 3<>/dev/tcp/localhost/8080; printf ''GET /actuator/health/readiness HTTP/1.0\r\n\r\n'' >&3; cat <&3 | grep -q UP"']
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+  frontend:
+    build: ./frontend
+    ports: ['${WEB_PORT:-3000}:80']
+    depends_on:
+      backend: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://localhost/health]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+volumes:
+  pgdata:

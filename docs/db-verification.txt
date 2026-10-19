@@ -1,0 +1,10 @@
+ oversold 
+----------
+        0
+(1 row)
+
+ inventory_mismatch 
+--------------------
+                  0
+(1 row)
+

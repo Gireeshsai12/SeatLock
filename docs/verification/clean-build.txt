@@ -1,0 +1,18 @@
+Clean ZIP extraction validation (2026-10-17 UTC)
+
+EXEC ./mvnw -o -B package
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.23 s -- in com.seatlock.ReservationITTest
+[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+EXEC npm ci --offline --no-audit --no-fund
+added 73 packages in 2s
+EXEC npm run build
+dist/index.html                   0.42 kB │ gzip:  0.30 kB
+dist/assets/index-Cwp9faeg.css   12.55 kB │ gzip:  3.67 kB
+dist/assets/index-RxNObnXu.js   218.09 kB │ gzip: 68.02 kB
+PASS clean extracted hold → checkout → booking
+EXEC npm run test:e2e -- --grep responsive application screenshots
+  1 passed (3.0s)
+PASS clean source builds, 21 real-PostgreSQL tests, production frontend build, normal-duration screenshot journey, SQL invariant checks
+
+Docker was not installed; Docker build/run checks were not executed.

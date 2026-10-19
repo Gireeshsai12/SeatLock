@@ -1,0 +1,38 @@
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 5s
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/seatlock}
+    username: ${DB_USER:seatlock}
+    password: ${DB_PASSWORD:local-demo-only}
+    hikari:
+      maximum-pool-size: 24
+      connection-init-sql: SET lock_timeout = '5s'
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      timeout: 500ms
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+seatlock:
+  hold-seconds: ${HOLD_SECONDS:300}
+  lab-enabled: ${LAB_ENABLED:true}
+  demo-password: ${DEMO_PASSWORD:SeatLock-demo-2026!}
+
+logging:
+  structured:
+    format:
+      console: logstash

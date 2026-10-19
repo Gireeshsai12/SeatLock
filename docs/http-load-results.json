@@ -1,0 +1,18 @@
+{
+  "attempts": 12,
+  "concurrency": 6,
+  "identityCount": 1,
+  "successfulHolds": 1,
+  "confirmedBookings": 1,
+  "outcomes": {
+    "ACTIVE_HOLD_LIMIT": 6,
+    "SEAT_BOOKED": 5,
+    "SUCCEEDED": 1
+  },
+  "durationSeconds": 0.03815384300014557,
+  "throughputAttemptsPerSecond": 314.51615502936926,
+  "p50ms": 13.815681999858498,
+  "p95ms": 32.57754600008411,
+  "databaseInvariantVerification": "NOT_RUN_BY_HTTP_GENERATOR",
+  "scope": "Public endpoints; one isolated A1 seat; user/rate limits enabled; local measurement only"
+}

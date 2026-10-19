@@ -1,0 +1,25 @@
+ oversold_event_seats 
+----------------------
+                    0
+(1 row)
+
+ booked_inventory_mismatches 
+-----------------------------
+                           0
+(1 row)
+
+ overlapping_live_hold_claims 
+------------------------------
+                            0
+(1 row)
+
+ partial_booked_holds 
+----------------------
+                    0
+(1 row)
+
+ payment_booking_mismatches 
+----------------------------
+                          0
+(1 row)
+
